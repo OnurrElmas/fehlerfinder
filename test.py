@@ -53,5 +53,5 @@ for fehler in fehlers:
     textEditor.insert("end",f"{fehler}\n")
 
 
-root.geometry("700x600+500+200")
+root.geometry("500x400+400+100")
 root.mainloop()
