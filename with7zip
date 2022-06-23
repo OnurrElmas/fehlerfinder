@@ -9,6 +9,7 @@ path = "C:\\Users\\elmas\\OneDrive\\Desktop\\fehler finder\\"
 root = Tk()
 root.title("Fehler finder")
 
+
 def openFile():
     file = filedialog.askopenfilename(initialdir='/',title="Laden Sie Log Datei hoch")
     
@@ -19,21 +20,21 @@ def openFile():
             if fileName.endswith('.log'):
                 try:
                     print(fileName)
-                    compressed.extract(targets=fileName,path=path)
+                    compressed.extract(targets=fileName , path = path)
                 except:
                     print("Data could not open")
-        for myfile in os.listdir(path):
-            if myfile.endswith(".log"):
-                with open(os.path.join(path,myfile),'r') as f:
-                    text_content = f.read()
+    return fileName
+        
+def content_file(fileName):        
+    for fileName in os.listdir(path):
+        if fileName.endswith(".log"):
+            with open(os.path.join(path,fileName),'r') as f:
+                text_content = f.read()
     return text_content
 
-def delete_file():
-    for myfile in os.listdir(path):
-            if myfile.endswith(".log"):
-                os.remove(os.path.join(path,myfile))
-                print("is deleted")
-
+def delete_file(fileName):
+    os.remove(os.path.join(path,fileName))
+    print("is deleted")
 
 #def openFile():
 #    file = filedialog.askopenfilename(initialdir='/',title="Laden Sie Log Datei hoch")
@@ -124,14 +125,16 @@ def find_fehlers(logfile_content):
         fehlers.append("Keine Fehler")
     return fehlers    
 
-content_file = openFile()
+fileName = openFile()
+content_file = content_file(fileName)
 fehlers = find_fehlers(content_file)
 
 textEditor = Text(root,width=60,height=20,wrap=WORD)
 textEditor.pack()
+
 for fehler in fehlers:
     textEditor.insert("end",f"{fehler}\n")
 
 root.geometry("500x400+400+100")
 root.mainloop()
-delete_file()
+delete_file(fileName)
